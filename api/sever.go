@@ -18,7 +18,6 @@ func StartWebServer() error {
 	router := mux.NewRouter().StrictSlash(true)
 
 	wordController := controllers.NewWordController()
-	// router.HandleFunc({ エンドポイント }, { レスポンス関数 }).Methods({ リクエストメソッド（複数可能） })
 	router.HandleFunc("/", rootPage)
 	router.HandleFunc("/v1/learn/word/all", wordController.FetchAllWords)
 
