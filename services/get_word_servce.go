@@ -1,9 +1,12 @@
 package services
 
-import "context"
+import (
+	"context"
+	"learn-word/domains"
+)
 
 type GetWordService interface {
-	GetWordAll(ctx context.Context) []Word
+	GetWordAll(ctx context.Context) []domains.WordDomain
 }
 
 type getWordService struct{}
@@ -12,25 +15,19 @@ func NewGetWordService() GetWordService {
 	return &getWordService{}
 }
 
-func (*getWordService) GetWordAll(ctx context.Context) []Word {
-	words := []Word{}
+func (*getWordService) GetWordAll(ctx context.Context) []domains.WordDomain {
+	words := []domains.WordDomain{}
 	words = append(words,
-		Word{
+		domains.WordDomain{
 			Id:         "1",
 			Vocabulary: "learn",
 			Mean:       "稼ぐ",
 		},
-		Word{
+		domains.WordDomain{
 			Id:         "2",
 			Vocabulary: "study",
 			Mean:       "勉強する",
 		},
 	)
 	return words
-}
-
-type Word struct {
-	Id         string `json:"id"`
-	Vocabulary string `json:"vocabulary"`
-	Mean       string `json:"mean"`
 }
