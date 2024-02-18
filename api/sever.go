@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"learn-word/controllers"
+	"learn-word/services"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -14,10 +15,9 @@ func rootPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func StartWebServer() error {
-	fmt.Println("Rest API with Mux Routers")
 	router := mux.NewRouter().StrictSlash(true)
 
-	wordController := controllers.NewWordController()
+	wordController := controllers.NewWordController(services.NewGetWordService())
 	router.HandleFunc("/", rootPage)
 	router.HandleFunc("/v1/learn/word/all", wordController.FetchAllWords)
 

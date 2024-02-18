@@ -2,33 +2,22 @@ package controllers
 
 import (
 	"encoding/json"
+	"learn-word/services"
 	"net/http"
 )
 
-type Word struct {
-	Id         string `json:"id"`
-	Vocabulary string `json:"vocabulary"`
-	Mean       string `json:"mean"`
-}
-
-func getData() []*Word {
-	words := []*Word{}
-	words = append(words, &Word{
-		Id:         "1",
-		Vocabulary: "learn",
-		Mean:       "稼ぐ",
-	})
-	return words
-}
-
 type WordController struct {
+	getWordService services.GetWordService
 }
 
-func NewWordController() *WordController {
-	return &WordController{}
+func NewWordController(service services.GetWordService) *WordController {
+	return &WordController{service}
 }
 
 func (c *WordController) FetchAllWords(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(getData())
+
+	getWorkServce := services.NewGetWordService()
+	words := getWorkServce.GetWordAll(r.Context())
+	json.NewEncoder(w).Encode(words)
 }
